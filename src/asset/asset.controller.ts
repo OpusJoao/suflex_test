@@ -11,7 +11,7 @@ export class AssetController {
     async uploadFileToDatabase(@UploadedFile() file: Express.Multer.File) {
         const csvData = file.buffer.toString()
         
-        const parsedCsv = parse(csvData, {
+        parse(csvData, {
             header: true,
             skipEmptyLines: true,
             transformHeader: header => header.toLowerCase().trim(),
@@ -19,7 +19,9 @@ export class AssetController {
             complete: result => result.data,
         })
 
-        return parsedCsv;
+        return {
+            message: 'creation in process'
+        };
     }
 
     private async createItemInDatabase(data){
