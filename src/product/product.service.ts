@@ -1,8 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { Product, Prisma } from '@prisma/client'
 @Injectable()
 export default class ProductService{
+    private readonly logger = new Logger(ProductService.name);
     constructor( private prisma: PrismaService ){}
 
     async find(
@@ -15,11 +16,25 @@ export default class ProductService{
         }
     ): Promise< Product[] | null >{
         const {skip, take, cursor, where, orderBy} = params;
-        return this.prisma.product.findMany({skip, take, cursor, where, orderBy});
+        let products
+        
+        try{
+            products = await this.prisma.product.findMany({skip, take, cursor, where, orderBy});
+        }catch(e){
+            this.logger.error(`Error trying to get products: ${e.message}`);
+        }
+
+        return products;
     }
 
     async create(product: Prisma.ProductCreateInput): Promise< Product >{
-        return this.prisma.product.create({data: product});
+        let productCreated
+        try{
+            productCreated = this.prisma.product.create({data: product});
+        }catch(e){
+            this.logger.error(`Error trying to create product: ${e.message}`);
+        }
+        return 
 
     }
 }
