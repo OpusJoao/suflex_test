@@ -5,7 +5,7 @@ import { Product, Prisma } from '@prisma/client'
 export default class ProductService{
     constructor( private prisma: PrismaService ){}
 
-    async get(
+    async find(
         params: {
             skip?: number,
             take?: number,
@@ -16,5 +16,10 @@ export default class ProductService{
     ): Promise< Product[] | null >{
         const {skip, take, cursor, where, orderBy} = params;
         return this.prisma.product.findMany({skip, take, cursor, where, orderBy});
+    }
+
+    async create(product: Prisma.ProductCreateInput): Promise< Product >{
+        return this.prisma.product.create({data: product});
+
     }
 }
