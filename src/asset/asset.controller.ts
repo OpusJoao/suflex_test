@@ -20,7 +20,7 @@ export class AssetController {
         })
 
         return {
-            message: 'creation in process'
+            message: 'Creation in process'
         };
     }
 

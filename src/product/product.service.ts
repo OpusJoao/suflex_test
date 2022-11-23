@@ -34,7 +34,7 @@ export default class ProductService{
         }catch(e){
             this.logger.error(`Error trying to create product: ${e.message}`);
         }
-        return 
+        return productCreated
 
     }
 }
