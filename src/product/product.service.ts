@@ -28,13 +28,32 @@ export default class ProductService{
     }
 
     async create(product: Prisma.ProductCreateInput): Promise< Product >{
-        let productCreated
         try{
-            productCreated = this.prisma.product.create({data: product});
+            return this.prisma.product.create({data: product});
         }catch(e){
             this.logger.error(`Error trying to create product: ${e.message}`);
         }
-        return productCreated
+        return 
+    }
+
+    async update(params: { where: Prisma.ProductWhereUniqueInput, data: Prisma.ProductUpdateInput }): Promise< Product >{
+        const {where, data} = params;
+
+        return this.prisma.product.update({data, where}); 
+    }
+
+    async createOrUpdate(product: Prisma.ProductCreateInput): Promise< Product >{
+        try{
+            const productFinded = await this.find({where: {name:{equals: product.name}}});
+            if(productFinded){
+                return await this.update({where: {id: productFinded[0].id}, data: product})
+            }else{
+                return await this.create(product)
+            }
+        }catch(e){
+            this.logger.error(`Error trying to create product: ${e.message}`);
+        }
+        return
 
     }
 }
