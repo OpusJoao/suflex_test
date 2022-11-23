@@ -1,0 +1,26 @@
+version: '3'
+services:
+  suflex-server:
+    container_name: suflex-server
+    # restart: always
+    build: .
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    command: sh -c "npx prisma migrate dev; yarn start:dev"
+    links:
+      - postgres
+    volumes:
+      - .:/app
+  postgres:
+    container_name: postgres
+    restart: always
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
