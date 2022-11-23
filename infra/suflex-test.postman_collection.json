@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "c9295564-ee9a-490c-adb2-65336c0fb039",
+		"name": "suflex-test",
+		"description": "# Descrição\n\nRequisições para testar a aplicação",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "UploadFile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/joaodev/Documents/tests/produtos.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/asset/upload",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"asset",
+						"upload"
+					]
+				},
+				"description": "# Descrição\nSelecione um arquivo e envie para atualizar o banco de dados\n\n## Retorno\n```json\n{\n    \"message\": \"Creation in process\"\n}\n```"
+			},
+			"response": []
+		},
+		{
+			"name": "getProducts",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/joaodev/Documents/tests/produtos.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/product?sort=asc&daysToExpire=1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"product"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "asc"
+						},
+						{
+							"key": "daysToExpire",
+							"value": "1"
+						}
+					]
+				},
+				"description": "# Descrição\nBusque os produtos que estão no banco de dados\n\n## Parâmetros\n| Campo        | Tipo   | Exemplo     |\n|--------------|--------|-------------|\n| sort         | string | asc \\| desc |\n| daysToExpire | int    | 1           |\n\n## Retorno\n\n```js\n[\n    {\n        \"id\": 151,\n        \"name\": \"abóbora\",\n        \"daysToExpiration\": 1\n    }, \n    ...\n]\n```"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "localhost:3000",
+			"type": "default"
+		}
+	]
+}
